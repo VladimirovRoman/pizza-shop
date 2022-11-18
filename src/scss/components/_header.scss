@@ -8,6 +8,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+    
+    
 
 		@media (max-width: 645px) {
 			flex-direction: column;
@@ -22,6 +24,18 @@
 	&__logo {
 		display: flex;
 
+		h1 {  
+			color: #181818;
+			font-size: 30px;
+			letter-spacing: 1%;
+			text-transform: uppercase;
+			font-weight: 800;
+		}
+
+		p {
+			color: #7b7b7b;
+		}
+
 		@media (max-width: '645px') {
 			text-align: center;
 		}
@@ -32,18 +46,6 @@
 
 			&:hover {
 				transform: rotate(360deg);
-			}
-
-			h1 {
-				color: #181818;
-				font-size: 24px;
-				letter-spacing: 1%;
-				text-transform: uppercase;
-				font-weight: 800;
-			}
-
-			p {
-				color: #7b7b7b;
 			}
 		}
 	}
