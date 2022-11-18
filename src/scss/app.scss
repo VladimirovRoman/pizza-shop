@@ -14,13 +14,25 @@ body {
 	margin: 50px auto;
 	border-radius: 10px;
 	max-width: 1400px;
+
+	@media (max-width: 645px) {
+		width: calc(100vw - 20px);
+		margin-top: 15px;
+	}
 }
 
 .content {
 	padding: 40px 0;
+	h2 {
+		font-size: 40px;
+		font-weight: 600;
+	}
 
 	&__title {
-		margin: 35px 0;
+		font-size: 40px;
+		margin-bottom: 50px;
+		margin-top: 60px;
+		font-weight: 600;
 	}
 
 	&__items {
@@ -52,7 +64,7 @@ body {
 
 			.categories {
 				width: 100%;
-				overflow: scroll;
+				overflow: auto;
 				margin-bottom: 20px;
 			}
 
@@ -150,6 +162,10 @@ body {
 				color: darken($color: #b6b6b6, $amount: 50);
 			}
 		}
+	}
+
+	.content__items   {
+		display: block;
 	}
 
 	&__item {
