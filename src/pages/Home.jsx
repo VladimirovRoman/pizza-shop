@@ -16,9 +16,10 @@ const Home = () => {
 				setItems(json)
 				setLoadingItems(false)
 			})
+		window.scrollTo(0, 0) // здесь мы делаем скролл при начальном Рендеринге
 	}, [])
 	return (
-		<>
+		<div className='container'>
 			<div className='content__top'>
 				<Categories />
 				<Sort />
@@ -29,7 +30,7 @@ const Home = () => {
 					? [...new Array(6)].map((_, i) => <SkeletonCard key={i} />)
 					: items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
 			</div>
-		</>
+		</div>
 	)
 }
 
