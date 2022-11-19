@@ -10,7 +10,7 @@ const Sort = () => {
 		setSelected(i);
 		setOpenPopUp(false)
 	}
-
+ 
 	return (
 		<div className='sort'>
 			<div className='sort__label'>
