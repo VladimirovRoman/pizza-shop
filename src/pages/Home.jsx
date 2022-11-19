@@ -18,6 +18,7 @@ const Home = () => {
 			})
 		window.scrollTo(0, 0) // здесь мы делаем скролл при начальном Рендеринге
 	}, [])
+	
 	return (
 		<div className='container'>
 			<div className='content__top'>
