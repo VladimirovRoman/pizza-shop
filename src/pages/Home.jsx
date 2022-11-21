@@ -43,7 +43,16 @@ const Home = ({ searchValue }) => {
 			<div className='content__items'>
 				{loadingItems
 					? [...new Array(6)].map((_, i) => <SkeletonCard key={i} />)
-					: items.filter().map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+					: items
+							.filter((obj) => {
+								if (
+									obj.title.toLowerCase().includes(searchValue.toLowerCase())
+								) {
+									return true
+								}
+								return false
+							})
+							.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
 			</div>
 		</div>
 	)
