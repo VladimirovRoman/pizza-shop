@@ -1,6 +1,7 @@
 import React from 'react'
 
-const Categories = () => {
+const Categories = (props) => {
+	console.log(props.category)
 	const [activeIndex, setActiveIndex] = React.useState(0)
 
 	const categories = [

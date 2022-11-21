@@ -8,6 +8,8 @@ import PizzaBlock from '../components/PizzaBlock/Items'
 const Home = () => {
 	const [items, setItems] = React.useState([])
 	const [loadingItems, setLoadingItems] = React.useState(true)
+	const [categoryId, setCategoryId] = React.useState(551023012)
+	const [sortId, setSortId] = React.useState(0)
 
 	React.useEffect(() => {
 		fetch('https://63761837b5f0e1eb850277d5.mockapi.io/pizzas')
@@ -22,7 +24,7 @@ const Home = () => {
 	return (
 		<div className='container'>
 			<div className='content__top'>
-				<Categories />
+				<Categories category={categoryId}  />
 				<Sort />
 			</div>
 			<h2 className='content__title'>Все пиццы</h2>
