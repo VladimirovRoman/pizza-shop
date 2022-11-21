@@ -1,22 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import LogoSvg from '../assets/img/pizza-logo.svg'
+import LogoSvg2 from '../assets/img/logo.svg'
 import Search from './Search'
 
-const Header = () => {
+const Header = ({ searchValue, setSearchValue }) => {
 	return (
 		<div className='header'>
 			<div className='container'>
 				<Link to='/'>
 					<div className='header__logo'>
-						<img width='38' src={LogoSvg} alt='Pizza logo' />
+						<img width='65' src={LogoSvg2} alt='Pizza logo' />
 						<div>
 							<h1>React Pizza</h1>
 							<p>самая вкусная пицца во вселенной</p>
 						</div>
 					</div>
 				</Link>
-				<Search />
+				<Search searchValue={searchValue} setSearchValue={setSearchValue} />
 				<div className='header__cart'>
 					<Link to='/cart' className='button button--cart'>
 						<span>520 ₽</span>

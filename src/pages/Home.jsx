@@ -5,7 +5,7 @@ import Sort from '../components/Sort'
 import { SkeletonCard } from '../components/PizzaBlock/SkeletonCard'
 import PizzaBlock from '../components/PizzaBlock/Items'
 
-const Home = () => {
+const Home = ({ searchValue }) => {
 	const [items, setItems] = React.useState([])
 	const [loadingItems, setLoadingItems] = React.useState(true)
 	const [categoryId, setCategoryId] = React.useState(0)
@@ -38,11 +38,12 @@ const Home = () => {
 				/>
 				<Sort sorting={sortId} onClickSorting={(id) => setSortId(id)} />
 			</div>
+
 			<h2 className='content__title'>Все пиццы</h2>
 			<div className='content__items'>
 				{loadingItems
 					? [...new Array(6)].map((_, i) => <SkeletonCard key={i} />)
-					: items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+					: items.filter().map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
 			</div>
 		</div>
 	)
