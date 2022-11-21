@@ -8,24 +8,35 @@ import PizzaBlock from '../components/PizzaBlock/Items'
 const Home = () => {
 	const [items, setItems] = React.useState([])
 	const [loadingItems, setLoadingItems] = React.useState(true)
-	const [categoryId, setCategoryId] = React.useState(551023012)
-	const [sortId, setSortId] = React.useState(0)
+	const [categoryId, setCategoryId] = React.useState(0)
+	const [sortId, setSortId] = React.useState({
+		name: 'популярности',
+		sortProperty: 'rating',
+	})
 
 	React.useEffect(() => {
-		fetch('https://63761837b5f0e1eb850277d5.mockapi.io/pizzas')
+		setLoadingItems(true)
+		fetch(
+			`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?${
+				categoryId > 0 ? `category=${categoryId}` : ''
+			}&sortBy=${sortId.sortProperty}&order=asc`
+		)
 			.then((response) => response.json())
 			.then((json) => {
 				setItems(json)
 				setLoadingItems(false)
 			})
 		window.scrollTo(0, 0) // здесь мы делаем скролл при начальном Рендеринге
-	}, [])
-	
+	}, [categoryId, sortId])
+
 	return (
 		<div className='container'>
 			<div className='content__top'>
-				<Categories category={categoryId}  />
-				<Sort />
+				<Categories
+					pizzaCategory={categoryId}
+					onClickCategory={(id) => setCategoryId(id)}
+				/>
+				<Sort sorting={sortId} onClickSorting={(id) => setSortId(id)} />
 			</div>
 			<h2 className='content__title'>Все пиццы</h2>
 			<div className='content__items'>

@@ -1,9 +1,7 @@
 import React from 'react'
 
-const Categories = (props) => {
-	console.log(props.category)
-	const [activeIndex, setActiveIndex] = React.useState(0)
-
+const Categories = ({ pizzaCategory, onClickCategory }) => {
+	
 	const categories = [
 		'Все',
 		'Мясные',
@@ -19,8 +17,8 @@ const Categories = (props) => {
 				{categories.map((value, i) => (
 					<li
 						key={i}
-						onClick={() => setActiveIndex(i)}
-						className={activeIndex === i ? 'active' : ''}
+						onClick={() => onClickCategory(i)}
+						className={pizzaCategory === i ? 'active' : ''}
 					>
 						{value}
 					</li>
