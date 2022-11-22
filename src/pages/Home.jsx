@@ -3,10 +3,14 @@ import React from 'react'
 import Categories from '../components/Categories'
 import Sort from '../components/Sort'
 import { SkeletonCard } from '../components/PizzaBlock/SkeletonCard'
+import { SearchContext } from '../App'
+
 import PizzaBlock from '../components/PizzaBlock/Items'
 import Pagination from '../components/Pagination'
 
-const Home = ({ searchValue }) => {
+const Home = () => {
+	const { searchValue } = React.useContext(SearchContext)
+
 	const [items, setItems] = React.useState([])
 	const [loadingItems, setLoadingItems] = React.useState(true) //скелетон
 	const [categoryId, setCategoryId] = React.useState(0) // категории
@@ -31,7 +35,7 @@ const Home = ({ searchValue }) => {
 				setLoadingItems(false)
 			})
 		window.scrollTo(0, 0) // скролл при начальном Рендеринге
-	}, [categoryId, sortId, searchValue, pagination]) // массив зависимостей , функция в хуке отрабатывает при каждом изменении одного элемента в массиве зависимостей 
+	}, [categoryId, sortId, searchValue, pagination]) // массив зависимостей , функция в хуке отрабатывает при каждом изменении одного элемента в массиве зависимостей
 
 	return (
 		<div className='container'>
@@ -49,7 +53,7 @@ const Home = ({ searchValue }) => {
 					? [...new Array(6)].map((_, i) => <SkeletonCard key={i} />)
 					: items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
 			</div>
-			<Pagination onChangePagination={(e) => setPagination(e)} /> 
+			<Pagination onChangePagination={(e) => setPagination(e)} />
 		</div>
 	)
 }
