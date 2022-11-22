@@ -4,11 +4,13 @@ import Categories from '../components/Categories'
 import Sort from '../components/Sort'
 import { SkeletonCard } from '../components/PizzaBlock/SkeletonCard'
 import PizzaBlock from '../components/PizzaBlock/Items'
+import Pagination from '../components/Pagination'
 
 const Home = ({ searchValue }) => {
 	const [items, setItems] = React.useState([])
-	const [loadingItems, setLoadingItems] = React.useState(true)
-	const [categoryId, setCategoryId] = React.useState(0)
+	const [loadingItems, setLoadingItems] = React.useState(true) //скелетон
+	const [categoryId, setCategoryId] = React.useState(0) // категории
+	const [pagination, setPagination] = React.useState(1) //состояние  пагинации
 	const [sortId, setSortId] = React.useState({
 		name: 'популярности',
 		sortProperty: 'rating',
@@ -16,18 +18,20 @@ const Home = ({ searchValue }) => {
 
 	React.useEffect(() => {
 		setLoadingItems(true)
+		const category = categoryId > 0 ? `category=${categoryId}` : ''
+		const sortBy = sortId.sortProperty.replace('-', '')
+		const search = searchValue ? `&search=${searchValue}` : ''
+
 		fetch(
-			`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?${
-				categoryId > 0 ? `category=${categoryId}` : ''
-			}&sortBy=${sortId.sortProperty}&order=asc`
+			`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?page=${pagination}&limit=4&${category}&sortBy=${sortBy}${search}` // запрос на бэк-енд
 		)
-			.then((response) => response.json())
+			.then((response) => response.json()) // ответ в виде json
 			.then((json) => {
 				setItems(json)
 				setLoadingItems(false)
 			})
-		window.scrollTo(0, 0) // здесь мы делаем скролл при начальном Рендеринге
-	}, [categoryId, sortId])
+		window.scrollTo(0, 0) // скролл при начальном Рендеринге
+	}, [categoryId, sortId, searchValue, pagination]) // массив зависимостей , функция в хуке отрабатывает при каждом изменении одного элемента в массиве зависимостей 
 
 	return (
 		<div className='container'>
@@ -43,17 +47,9 @@ const Home = ({ searchValue }) => {
 			<div className='content__items'>
 				{loadingItems
 					? [...new Array(6)].map((_, i) => <SkeletonCard key={i} />)
-					: items
-							.filter((obj) => {
-								if (
-									obj.title.toLowerCase().includes(searchValue.toLowerCase())
-								) {
-									return true
-								}
-								return false
-							})
-							.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+					: items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
 			</div>
+			<Pagination onChangePagination={(e) => setPagination(e)} /> 
 		</div>
 	)
 }

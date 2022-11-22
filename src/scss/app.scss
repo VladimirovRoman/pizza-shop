@@ -7,7 +7,6 @@ body {
 	background-color: $background;
 }
 
-
 .wrapper {
 	width: calc(100vw - 100px);
 	height: 100%;
@@ -39,7 +38,7 @@ body {
 	&__items {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
-		grid-template-rows: repeat(2, 1fr);
+		grid-template-rows: repeat(1, 1fr);
 		grid-column-gap: 11px;
 
 		@media (max-width: 1400px) {
@@ -165,7 +164,7 @@ body {
 		}
 	}
 
-	.content__items   {
+	.content__items {
 		display: block;
 	}
 
