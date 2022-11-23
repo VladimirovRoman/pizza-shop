@@ -1,5 +1,7 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
+import { setCategoryId } from '../redux/slices/filterSlice'
 import Categories from '../components/Categories'
 import Sort from '../components/Sort'
 import { SkeletonCard } from '../components/PizzaBlock/SkeletonCard'
@@ -9,16 +11,22 @@ import PizzaBlock from '../components/PizzaBlock/Items'
 import Pagination from '../components/Pagination'
 
 const Home = () => {
-	const { searchValue } = React.useContext(SearchContext)
+	const dispatch = useDispatch()
+	const categoryId = useSelector((state) => state.filterSlice.categoryId)
 
+	const { searchValue } = React.useContext(SearchContext)
 	const [items, setItems] = React.useState([])
 	const [loadingItems, setLoadingItems] = React.useState(true) //скелетон
-	const [categoryId, setCategoryId] = React.useState(0) // категории
+	// const [categoryId, setCategoryId] = React.useState(0) // категории
 	const [pagination, setPagination] = React.useState(1) //состояние  пагинации
 	const [sortId, setSortId] = React.useState({
 		name: 'популярности',
 		sortProperty: 'rating',
 	})
+
+	const onClickCategory = (id) => {
+		dispatch(setCategoryId(id))
+	}
 
 	React.useEffect(() => {
 		setLoadingItems(true)
@@ -42,7 +50,7 @@ const Home = () => {
 			<div className='content__top'>
 				<Categories
 					pizzaCategory={categoryId}
-					onClickCategory={(id) => setCategoryId(id)}
+					onClickCategory={onClickCategory}
 				/>
 				<Sort sorting={sortId} onClickSorting={(id) => setSortId(id)} />
 			</div>
