@@ -1,7 +1,8 @@
 import React from 'react'
+import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { setCategoryId } from '../redux/slices/filterSlice'
+import { setCategoryId, setPageCount } from '../redux/slices/filterSlice'
 import Categories from '../components/Categories'
 import Sort from '../components/Sort'
 import { SkeletonCard } from '../components/PizzaBlock/SkeletonCard'
@@ -12,17 +13,13 @@ import Pagination from '../components/Pagination'
 
 const Home = () => {
 	const dispatch = useDispatch()
-	const categoryId = useSelector((state) => state.filterSlice.categoryId)
+	const { categoryId, sort, pageCount } = useSelector(
+		(state) => state.filterSlice
+	)
 
 	const { searchValue } = React.useContext(SearchContext)
 	const [items, setItems] = React.useState([])
 	const [loadingItems, setLoadingItems] = React.useState(true) //скелетон
-	// const [categoryId, setCategoryId] = React.useState(0) // категории
-	const [pagination, setPagination] = React.useState(1) //состояние  пагинации
-	const [sortId, setSortId] = React.useState({
-		name: 'популярности',
-		sortProperty: 'rating',
-	})
 
 	const onClickCategory = (id) => {
 		dispatch(setCategoryId(id))
@@ -31,19 +28,20 @@ const Home = () => {
 	React.useEffect(() => {
 		setLoadingItems(true)
 		const category = categoryId > 0 ? `category=${categoryId}` : ''
-		const sortBy = sortId.sortProperty.replace('-', '')
+		const sortBy = sort.sortProperty.replace('-', '')
 		const search = searchValue ? `&search=${searchValue}` : ''
 
-		fetch(
-			`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?page=${pagination}&limit=4&${category}&sortBy=${sortBy}${search}` // запрос на бэк-енд
-		)
-			.then((response) => response.json()) // ответ в виде json
-			.then((json) => {
-				setItems(json)
+		axios
+			.get(
+				`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?page=${pageCount}&limit=4&${category}&sortBy=${sortBy}${search}`
+			)
+			.then((res) => {
+				setItems(res.data)
 				setLoadingItems(false)
 			})
+
 		window.scrollTo(0, 0) // скролл при начальном Рендеринге
-	}, [categoryId, sortId, searchValue, pagination]) // массив зависимостей , функция в хуке отрабатывает при каждом изменении одного элемента в массиве зависимостей
+	}, [categoryId, sort.sortProperty, searchValue, pageCount]) // массив зависимостей , функция в хуке отрабатывает при каждом изменении одного элемента в массиве зависимостей
 
 	return (
 		<div className='container'>
@@ -52,7 +50,7 @@ const Home = () => {
 					pizzaCategory={categoryId}
 					onClickCategory={onClickCategory}
 				/>
-				<Sort sorting={sortId} onClickSorting={(id) => setSortId(id)} />
+				<Sort />
 			</div>
 
 			<h2 className='content__title'>Все пиццы</h2>
@@ -61,7 +59,7 @@ const Home = () => {
 					? [...new Array(6)].map((_, i) => <SkeletonCard key={i} />)
 					: items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
 			</div>
-			<Pagination onChangePagination={(e) => setPagination(e)} />
+			<Pagination onChangePagination={(e) => dispatch(setPageCount(e))} />
 		</div>
 	)
 }
