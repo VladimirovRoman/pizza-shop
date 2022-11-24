@@ -8,8 +8,14 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-    
-    
+
+		.logo__text {
+			transition: all 0.3s ease-in-out;
+
+			&:hover {
+				transform: scale(1.03);
+			}
+		}
 
 		@media (max-width: 645px) {
 			flex-direction: column;
@@ -24,7 +30,7 @@
 	&__logo {
 		display: flex;
 
-		h1 {  
+		h1 {
 			color: #181818;
 			font-size: 30px;
 			letter-spacing: 1%;

@@ -11,8 +11,8 @@ const Header = ({ searchValue, setSearchValue }) => {
 					<div className='header__logo'>
 						<img width='65' src={LogoSvg2} alt='Pizza logo' />
 						<div>
-							<h1>React Pizza</h1>
-							<p>самая вкусная пицца во вселенной</p>
+							<h1 className='logo__text'>React Pizza</h1>
+							<p className='logo__text'>самая вкусная пицца во вселенной</p>
 						</div>
 					</div>
 				</Link>
