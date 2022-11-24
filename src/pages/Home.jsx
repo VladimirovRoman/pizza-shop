@@ -50,7 +50,7 @@ const Home = () => {
 				setLoadingItems(false)
 			})
 	}
-	// Если изменили параметры и был первый рендер то в этом случае  -> 
+	// Если изменили параметры и был первый рендер то в этом случае  ->
 	React.useEffect(() => {
 		if (isMounted.current) {
 			const queryString = qs.stringify({
@@ -63,7 +63,7 @@ const Home = () => {
 		isMounted.current = true
 	}, [categoryId, sort.sortProperty, pageCount])
 
-	// Если был первый рендер, то проверяем URL - параметры и сохраняем в редаксе -> 
+	// Если был первый рендер, то проверяем URL - параметры и сохраняем в редаксе ->
 	React.useEffect(() => {
 		if (window.location.search) {
 			const params = qs.parse(window.location.search.substring(1))
@@ -80,7 +80,8 @@ const Home = () => {
 			isSearch.current = true
 		}
 	}, [])
-	// здесь запрашиваем пиццы при первом рендере -> 
+
+	// здесь запрашиваем пиццы при первом рендере ->
 	React.useEffect(() => {
 		window.scrollTo(0, 0)
 

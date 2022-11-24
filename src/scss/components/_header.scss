@@ -9,14 +9,14 @@
 		align-items: center;
 		justify-content: space-between;
 
-		.logo__text {
+		.text__logo {
 			transition: all 0.3s ease-in-out;
+			color: $orange;
 
 			&:hover {
 				transform: scale(1.03);
 			}
 		}
-
 		@media (max-width: 645px) {
 			flex-direction: column;
 			margin: 0 auto;

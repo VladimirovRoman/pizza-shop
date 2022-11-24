@@ -1,19 +1,36 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
-const PizzaBlock = (props) => {
+import {addItem, removeItem, clearItem} from '../../redux/slices/cartSlice.js'
+
+const PizzaBlock = ({ id, title, imageUrl, price, sizes, types }) => {
+	
+	const dispatch = useDispatch()
 	const [activeType, setActiveType] = React.useState(0)
 	const [activeSize, setActiveSize] = React.useState(0)
 
 	const typeName = ['тонкое', 'традиционное']
 
+	const onClickAdd = () => {
+		const item = {
+			id,
+			title,
+			price,
+			imageUrl,
+			type: activeType,
+			size: activeSize,
+		}
+		dispatch(addItem(item))
+	}
+
 	return (
-		<div className='pizza-block-wrapper' >
+		<div className='pizza-block-wrapper'>
 			<div className='pizza-block'>
-				<img className='pizza-block__image' src={props.imageUrl} alt='Pizza' />
-				<h4 className='pizza-block__title'>{props.title}</h4>
+				<img className='pizza-block__image' src={imageUrl} alt='Pizza' />
+				<h4 className='pizza-block__title'>{title}</h4>
 				<div className='pizza-block__selector'>
 					<ul>
-						{props.types.map((type) => (
+						{types.map((type) => (
 							<li
 								key={type}
 								onClick={() => setActiveType(type)}
@@ -24,7 +41,7 @@ const PizzaBlock = (props) => {
 						))}
 					</ul>
 					<ul>
-						{props.sizes.map((size, i) => (
+						{sizes.map((size, i) => (
 							<li
 								key={i}
 								onClick={() => setActiveSize(i)}
@@ -36,8 +53,11 @@ const PizzaBlock = (props) => {
 					</ul>
 				</div>
 				<div className='pizza-block__bottom'>
-					<div className='pizza-block__price'>от {props.price} ₽</div>
-					<button className=' button button--outline button--add'>
+					<div className='pizza-block__price'>от {price} ₽</div>
+					<button
+						onClick={onClickAdd}
+						className=' button button--outline button--add'
+					>
 						<svg
 							width='12'
 							height='12'
