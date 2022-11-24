@@ -101,7 +101,9 @@ const Home = () => {
 				<Sort />
 			</div>
 
-			<h2 className='content__title'>Все пиццы</h2>
+			<h2 className='content__title'>
+				Все <span>пиццы</span>
+			</h2>
 			<div className='content__items'>
 				{loadingItems
 					? [...new Array(6)].map((_, i) => <SkeletonCard key={i} />)
