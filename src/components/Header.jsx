@@ -5,7 +5,11 @@ import LogoSvg2 from '../assets/img/logo.svg'
 import Search from './Search'
 
 const Header = ({ searchValue, setSearchValue }) => {
+
 	const { totalPrice, items } = useSelector((state) => state.cartSlice)
+	const totalCount = items.reduce((acc, obj) => acc + obj.count, 0)
+
+	
 
 	return (
 		<div className='header'>
@@ -55,7 +59,7 @@ const Header = ({ searchValue, setSearchValue }) => {
 								strokeLinejoin='round'
 							/>
 						</svg>
-						<span> {items.length} </span>
+						<span> {totalCount} </span>
 					</Link>
 				</div>
 			</div>
