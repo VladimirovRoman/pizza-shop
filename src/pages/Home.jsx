@@ -9,6 +9,8 @@ import {
 	setPageCount,
 	setFilter,
 } from '../redux/slices/filterSlice'
+
+import { fetchPizzas } from '../redux/slices/pizzaSlice'
 import Categories from '../components/Categories'
 import Sort, { sortList } from '../components/Sort'
 import { SkeletonCard } from '../components/PizzaBlock/SkeletonCard'
@@ -17,45 +19,45 @@ import { SearchContext } from '../App'
 import PizzaBlock from '../components/PizzaBlock/Items'
 import Pagination from '../components/Pagination'
 
-
 const Home = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const isSearch = React.useRef(false)
 	const isMounted = React.useRef(false)
 
+	const items = useSelector((state) => state.pizzaSlice.items)
 	const { categoryId, sort, pageCount } = useSelector(
 		(state) => state.filterSlice
 	)
 
 	const { searchValue } = React.useContext(SearchContext)
-	const [items, setItems] = React.useState([])
 	const [loadingItems, setLoadingItems] = React.useState(true) //скелетон
 
 	const onClickCategory = (id) => {
 		dispatch(setCategoryId(id))
 	}
 
-	const axiosPizzas = async () => {
+	const getPizzas = async () => {
 		setLoadingItems(true)
 		const category = categoryId > 0 ? `category=${categoryId}` : ''
 		const sortBy = sort.sortProperty.replace('-', '')
 		const search = searchValue ? `&search=${searchValue}` : ''
 
-		// await axios
-		// 	.get(
-		// 		`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?page=${pageCount}&limit=4&${category}&sortBy=${sortBy}${search}`
-		// 	)
-		// 	.then((res) => {
-		// 		setItems(res.data)
-		// 		setLoadingItems(false)
-		// 	})
-
-		const res = await axios.get(
-			`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?page=${pageCount}&limit=4&${category}&sortBy=${sortBy}${search}`
-		)
-		setItems(res.data)
-		setLoadingItems(false)
+		try {
+			dispatch(
+				fetchPizzas({
+					category,
+					sortBy,
+					search,
+					pageCount,
+				})
+			)
+		} catch (error) {
+			console.log('ошибка', error)
+			alert('Ошибка при получении данных')
+		} finally {
+			setLoadingItems(false)
+		}
 
 		window.scrollTo(0, 0)
 	}
@@ -95,7 +97,7 @@ const Home = () => {
 		window.scrollTo(0, 0)
 
 		if (!isSearch.current) {
-			axiosPizzas()
+			getPizzas()
 		}
 		isSearch.current = false
 	}, [categoryId, sort.sortProperty, searchValue, pageCount])
