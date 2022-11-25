@@ -17,6 +17,7 @@ import { SearchContext } from '../App'
 import PizzaBlock from '../components/PizzaBlock/Items'
 import Pagination from '../components/Pagination'
 
+
 const Home = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
@@ -35,20 +36,28 @@ const Home = () => {
 		dispatch(setCategoryId(id))
 	}
 
-	const axiosPizzas = () => {
+	const axiosPizzas = async () => {
 		setLoadingItems(true)
 		const category = categoryId > 0 ? `category=${categoryId}` : ''
 		const sortBy = sort.sortProperty.replace('-', '')
 		const search = searchValue ? `&search=${searchValue}` : ''
 
-		axios
-			.get(
-				`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?page=${pageCount}&limit=4&${category}&sortBy=${sortBy}${search}`
-			)
-			.then((res) => {
-				setItems(res.data)
-				setLoadingItems(false)
-			})
+		// await axios
+		// 	.get(
+		// 		`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?page=${pageCount}&limit=4&${category}&sortBy=${sortBy}${search}`
+		// 	)
+		// 	.then((res) => {
+		// 		setItems(res.data)
+		// 		setLoadingItems(false)
+		// 	})
+
+		const res = await axios.get(
+			`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?page=${pageCount}&limit=4&${category}&sortBy=${sortBy}${search}`
+		)
+		setItems(res.data)
+		setLoadingItems(false)
+
+		window.scrollTo(0, 0)
 	}
 	// Если изменили параметры и был первый рендер то в этом случае  ->
 	React.useEffect(() => {

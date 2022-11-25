@@ -16,7 +16,7 @@ const Cart = () => {
 			dispatch(clearItem())
 	}
 
-	if(!totalPrice){
+	if (!totalPrice) {
 		return <CartEmpty />
 	}
 	return (
