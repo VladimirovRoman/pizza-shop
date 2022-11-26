@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux'
 
 import LogoSvg2 from '../assets/img/logo.svg'
 import Search from './Search'
+import { cartSelect } from '../redux/slices/cartSlice'
 
 const Header = ({ searchValue, setSearchValue }) => {
 
-	const { totalPrice, items } = useSelector((state) => state.cartSlice)
+	const { totalPrice, items } = useSelector(cartSelect)
 	const totalCount = items.reduce((acc, obj) => acc + obj.count, 0)
 
 	

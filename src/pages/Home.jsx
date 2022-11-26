@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from 'axios'
+
 import qs from 'qs'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -14,7 +14,6 @@ import { fetchPizzas } from '../redux/slices/pizzaSlice'
 import Categories from '../components/Categories'
 import Sort, { sortList } from '../components/Sort'
 import { SkeletonCard } from '../components/PizzaBlock/SkeletonCard'
-import { SearchContext } from '../App'
 
 import PizzaBlock from '../components/PizzaBlock/Items'
 import Pagination from '../components/Pagination'
@@ -26,11 +25,9 @@ const Home = () => {
 	const isMounted = React.useRef(false)
 
 	const { items, status } = useSelector((state) => state.pizzaSlice)
-	const { categoryId, sort, pageCount } = useSelector(
+	const { categoryId, sort, pageCount, searchValue } = useSelector(
 		(state) => state.filterSlice
 	)
-
-	const { searchValue } = React.useContext(SearchContext)
 
 	const onClickCategory = (id) => {
 		dispatch(setCategoryId(id))
