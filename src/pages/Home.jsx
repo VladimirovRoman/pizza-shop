@@ -25,40 +25,30 @@ const Home = () => {
 	const isSearch = React.useRef(false)
 	const isMounted = React.useRef(false)
 
-	const items = useSelector((state) => state.pizzaSlice.items)
+	const { items, status } = useSelector((state) => state.pizzaSlice)
 	const { categoryId, sort, pageCount } = useSelector(
 		(state) => state.filterSlice
 	)
 
 	const { searchValue } = React.useContext(SearchContext)
-	const [loadingItems, setLoadingItems] = React.useState(true) //скелетон
 
 	const onClickCategory = (id) => {
 		dispatch(setCategoryId(id))
 	}
 
 	const getPizzas = async () => {
-		setLoadingItems(true)
 		const category = categoryId > 0 ? `category=${categoryId}` : ''
 		const sortBy = sort.sortProperty.replace('-', '')
 		const search = searchValue ? `&search=${searchValue}` : ''
 
-		try {
-			dispatch(
-				fetchPizzas({
-					category,
-					sortBy,
-					search,
-					pageCount,
-				})
-			)
-		} catch (error) {
-			console.log('ошибка', error)
-			alert('Ошибка при получении данных')
-		} finally {
-			setLoadingItems(false)
-		}
-
+		dispatch(
+			fetchPizzas({
+				category,
+				sortBy,
+				search,
+				pageCount,
+			})
+		)
 		window.scrollTo(0, 0)
 	}
 	// Если изменили параметры и был первый рендер то в этом случае  ->
@@ -102,6 +92,8 @@ const Home = () => {
 		isSearch.current = false
 	}, [categoryId, sort.sortProperty, searchValue, pageCount])
 
+	const skeleton = [...new Array(6)].map((_, i) => <SkeletonCard key={i} />)
+	const pizzaBlock = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
 	return (
 		<div className='container'>
 			<div className='content__top'>
@@ -115,11 +107,17 @@ const Home = () => {
 			<h2 className='content__title'>
 				Все <span>пиццы</span>
 			</h2>
-			<div className='content__items'>
-				{loadingItems
-					? [...new Array(6)].map((_, i) => <SkeletonCard key={i} />)
-					: items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
-			</div>
+			{status === 'error' ? (
+				<div className='content__error-info'>
+					<h2>К сожалению произошла ошибка</h2>
+					<p>Попробуйте зайти позднее</p>
+				</div>
+			) : (
+				<div className='content__items'>
+					{status === 'loading' ? skeleton : pizzaBlock}
+				</div>
+			)}
+
 			<Pagination onChangePagination={(e) => dispatch(setPageCount(e))} />
 		</div>
 	)
