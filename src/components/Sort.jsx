@@ -21,11 +21,11 @@ const Sort = () => {
 	}
 
 	React.useEffect(() => {
-		console.log('sort mount')
+
 		const handleClickOutside = (event) => {
 			if (!event.path.includes(sortRef.current)) {
 				setOpenPopUp(false)
-				console.log('клик')
+
 			}
 		}
 		document.body.addEventListener('click', handleClickOutside)
