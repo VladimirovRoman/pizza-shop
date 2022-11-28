@@ -9,8 +9,6 @@ const Header = ({ searchValue, setSearchValue }) => {
 	const { totalPrice, items } = useSelector(cartSelect)
 	const location = useLocation()
 
-
-
 	const totalCount = items.reduce((acc, obj) => acc + obj.count, 0)
 
 	return (

@@ -1,8 +1,7 @@
 import React from 'react'
-
 import qs from 'qs'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 import {
 	setCategoryId,
@@ -90,7 +89,13 @@ const Home = () => {
 	}, [categoryId, sort.sortProperty, searchValue, pageCount])
 
 	const skeleton = [...new Array(6)].map((_, i) => <SkeletonCard key={i} />)
-	const pizzaBlock = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
+	const pizzaBlock = items.map((obj) => (
+		<Link key={obj.id} to={`/pizza/${obj.id}`}>
+			{' '}
+			<PizzaBlock {...obj} />
+		</Link>
+	))
+
 	return (
 		<div className='container'>
 			<div className='content__top'>
