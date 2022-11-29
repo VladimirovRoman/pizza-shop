@@ -7,9 +7,10 @@ import {
 	setCategoryId,
 	setPageCount,
 	setFilter,
+	selectFilterData,
 } from '../redux/slices/filterSlice'
 
-import { fetchPizzas } from '../redux/slices/pizzaSlice'
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice'
 import Categories from '../components/Categories'
 import Sort, { sortList } from '../components/Sort'
 import { SkeletonCard } from '../components/PizzaBlock/SkeletonCard'
@@ -17,19 +18,21 @@ import { SkeletonCard } from '../components/PizzaBlock/SkeletonCard'
 import PizzaBlock from '../components/PizzaBlock/Items'
 import Pagination from '../components/Pagination'
 
-const Home = () => {
+const Home: React.FC = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const isSearch = React.useRef(false)
 	const isMounted = React.useRef(false)
 
-	const { items, status } = useSelector((state) => state.pizzaSlice)
-	const { categoryId, sort, pageCount, searchValue } = useSelector(
-		(state) => state.filterSlice
-	)
+	const { items, status } = useSelector(selectPizzaData)
+	const { categoryId, sort, pageCount, searchValue } =
+		useSelector(selectFilterData)
 
-	const onClickCategory = (id) => {
-		dispatch(setCategoryId(id))
+	const onClickCategory = (index: number) => {
+		dispatch(setCategoryId(index))
+	}
+	const onChangePage = (page: number) => {
+		dispatch(setPageCount(page))
 	}
 
 	const getPizzas = async () => {
@@ -38,6 +41,7 @@ const Home = () => {
 		const search = searchValue ? `&search=${searchValue}` : ''
 
 		dispatch(
+			//@ts-ignore
 			fetchPizzas({
 				category,
 				sortBy,
@@ -72,6 +76,7 @@ const Home = () => {
 				setFilter({
 					...params,
 					sort,
+					currentPage: params.currentPage,
 				})
 			)
 			isSearch.current = true
@@ -89,7 +94,7 @@ const Home = () => {
 	}, [categoryId, sort.sortProperty, searchValue, pageCount])
 
 	const skeleton = [...new Array(6)].map((_, i) => <SkeletonCard key={i} />)
-	const pizzaBlock = items.map((obj) => (
+	const pizzaBlock = items.map((obj: any) => (
 		<Link key={obj.id} to={`/pizza/${obj.id}`}>
 			{' '}
 			<PizzaBlock {...obj} />
@@ -120,7 +125,7 @@ const Home = () => {
 				</div>
 			)}
 
-			<Pagination onChangePagination={(e) => dispatch(setPageCount(e))} />
+			<Pagination currentPage={pageCount} onChangePage={onChangePage} />
 		</div>
 	)
 }

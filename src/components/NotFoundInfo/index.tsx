@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './NotFoundInfo.module.scss'
 
-const NotFoundInfo = () => {
+const NotFoundInfo: React.FC = () => {
 	return (
 		<div className={styles.root}>
 			<h1>

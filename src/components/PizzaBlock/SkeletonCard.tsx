@@ -1,10 +1,10 @@
 import React from 'react'
 import ContentLoader from 'react-content-loader'
 
-export const SkeletonCard = () => (
+export const SkeletonCard: React.FC = () => (
 	<ContentLoader
 		className='pizza-block'
-		speed={2}
+		speed={2}	
 		width={280}
 		height={500}
 		viewBox='0 0 280 500'

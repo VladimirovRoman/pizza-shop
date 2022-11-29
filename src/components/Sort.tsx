@@ -1,37 +1,47 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { setSortId, sortSelect } from '../redux/slices/filterSlice'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSortId, sortSelect } from '../redux/slices/filterSlice';
 
-export const sortList = [
+type SortItem = {
+	name: string;
+	sortProperty: string;
+};
+
+type PopupClick = MouseEvent & {
+	path: Node[];
+};
+
+export const sortList: SortItem[] = [
 	{ name: 'популярности', sortProperty: 'rating' },
 	{ name: 'цене', sortProperty: 'price' },
 	{ name: 'алфавиту', sortProperty: 'title' },
-]
+];
 
 const Sort = () => {
-	const sortRef = React.useRef()
-	const dispatch = useDispatch()
-	const sort = useSelector(sortSelect)
+	const sortRef = React.useRef<HTMLDivElement>(null);
+	const dispatch = useDispatch();
+	const sort = useSelector(sortSelect);
 
-	const [openPopUp, setOpenPopUp] = React.useState(false)
+	const [openPopUp, setOpenPopUp] = React.useState(false);
 
-	const onClickListItem = (obj) => {
-		dispatch(setSortId(obj))
-		setOpenPopUp(false)
-	}
+	const onClickListItem = (obj: SortItem) => {
+		dispatch(setSortId(obj));
+		setOpenPopUp(false);
+	};
 
 	React.useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			const _event = event as PopupClick;
 
-		const handleClickOutside = (event) => {
-			if (!event.path.includes(sortRef.current)) {
-				setOpenPopUp(false)
-
+			if (sortRef.current && !_event.path.includes(sortRef.current)) {
+				setOpenPopUp(false);
 			}
-		}
-		document.body.addEventListener('click', handleClickOutside)
+		};
 
-		return () => document.body.removeEventListener('click', handleClickOutside)
-	}, [])
+		document.body.addEventListener('click', handleClickOutside);
+
+		return () => document.body.removeEventListener('click', handleClickOutside);
+	}, []);
 
 	return (
 		<div ref={sortRef} className='sort'>
@@ -69,7 +79,7 @@ const Sort = () => {
 				</div>
 			)}
 		</div>
-	)
-}
+	);
+};
 
-export default Sort
+export default Sort;

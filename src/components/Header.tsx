@@ -5,11 +5,11 @@ import LogoSvg2 from '../assets/img/logo.svg'
 import Search from './Search'
 import { cartSelect } from '../redux/slices/cartSlice'
 
-const Header = ({ searchValue, setSearchValue }) => {
+const Header: React.FC = () => {
 	const { totalPrice, items } = useSelector(cartSelect)
 	const location = useLocation()
 
-	const totalCount = items.reduce((acc, obj) => acc + obj.count, 0)
+	const totalCount = items.reduce((acc: number, obj: any) => acc + obj.count, 0)
 
 	return (
 		<div className='header'>
