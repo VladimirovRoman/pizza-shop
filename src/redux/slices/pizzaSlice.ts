@@ -1,37 +1,46 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
+import { SortItems } from './filterSlice';
 
-type PizzaItem = {
+export type Pizza = {
 	id: string;
 	title: string;
 	price: number;
 	imageUrl: string;
 	sizes: number[];
 	types: number[];
+	rating: number;
 };
 
-enum Status {
+export enum Status {
 	LOADING = 'loading',
 	SUCCESS = 'success',
 	ERROR = 'error',
 }
 
 interface PizzaSliceState {
-	items: PizzaItem[];
+	items: Pizza[];
 	status: Status;
 }
 
-export const fetchPizzas = createAsyncThunk<
-	PizzaItem[],
-	Record<string, number>
->('pizza/fetchPizzasStatus', async (params) => {
-	const { category, sortBy, search, pageCount } = params;
-	const { data } = await axios.get<PizzaItem[]>(
-		`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?page=${pageCount}&limit=4&${category}&sortBy=${sortBy}${search}`
-	);
-	return data;
-});
+export type SearchPizzaParams = {
+	sortBy: string;
+	category: string;
+	search: string;
+	pageCount: number;
+};
+
+export const fetchPizzas = createAsyncThunk<Pizza[], SearchPizzaParams>(
+	'pizza/fetchPizzasStatus',
+	async (params) => {
+		const { category, sortBy, search, pageCount } = params;
+		const { data } = await axios.get<Pizza[]>(
+			`https://63761837b5f0e1eb850277d5.mockapi.io/pizzas?page=${pageCount}&limit=4&${category}&sortBy=${sortBy}${search}`
+		);
+		return data;
+	}
+);
 
 const initialState: PizzaSliceState = {
 	items: [],
@@ -42,7 +51,7 @@ const pizzaSlice = createSlice({
 	name: 'pizza',
 	initialState,
 	reducers: {
-		setItems(state, action: PayloadAction<PizzaItem[]>) {
+		setItems(state, action: PayloadAction<Pizza[]>) {
 			state.items = action.payload;
 		},
 	},

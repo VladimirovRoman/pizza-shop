@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
 	addItem,
-	CartItem,
 	itemSelectById,
-} from '../../redux/slices/cartSlice.js';
+	CartItem,
+} from '../../redux/slices/cartSlice';
 
 const typeName = ['тонкое', 'традиционное'];
 

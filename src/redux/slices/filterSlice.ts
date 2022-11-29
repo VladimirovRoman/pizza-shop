@@ -1,16 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-type SortItem = {
+export enum SortPropertyEnum {
+	RATING = 'rating',
+	PRICE = 'price',
+	TITLE = 'title',
+}
+
+export type SortItems = {
 	name: string;
-	sortProperty: 'popular' | 'rating' | 'title';
+	sortProperty: SortPropertyEnum;
 };
 
 interface FilterSliceState {
-	categoryId: number;
 	searchValue: string;
+	categoryId: number;
 	pageCount: number;
-	sort: SortItem;
+	sort: SortItems;
 }
 
 const initialState: FilterSliceState = {
@@ -19,7 +25,7 @@ const initialState: FilterSliceState = {
 	pageCount: 1,
 	sort: {
 		name: 'популярности',
-		sortProperty: 'rating',
+		sortProperty: SortPropertyEnum.RATING,
 	},
 };
 
@@ -33,23 +39,33 @@ const filterSlice = createSlice({
 		setSearchValue(state, action: PayloadAction<string>) {
 			state.searchValue = action.payload;
 		},
-		setSortId(state, action: PayloadAction<SortItem>) {
+		setSortId(state, action: PayloadAction<SortItems>) {
 			state.sort = action.payload;
 		},
 		setPageCount(state, action: PayloadAction<number>) {
 			state.pageCount = action.payload;
 		},
 		setFilter(state, action: PayloadAction<FilterSliceState>) {
-			state.pageCount = Number(action.payload.pageCount);
-			state.sort = action.payload.sort;
-			state.categoryId = Number(action.payload.categoryId);
+			if (Object.keys(action.payload).length) {
+				state.pageCount = Number(action.payload.pageCount);
+				state.categoryId = Number(action.payload.categoryId);
+				state.sort = action.payload.sort;
+			} else {
+				state.pageCount = 1;
+				state.categoryId = 0;
+				state.sort = {
+					name: 'популярности',
+					sortProperty: SortPropertyEnum.RATING,
+				};
+			}
 		},
 	},
 });
 
 export const sortSelect = (state: RootState) => state.filterSlice.sort;
 
-export const selectFilterData = (state: RootState) => state.filterSlice;
+export const selectFilter = (state: RootState) => state.filterSlice;
+
 export const {
 	setCategoryId,
 	setSortId,
