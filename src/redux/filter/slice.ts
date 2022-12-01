@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FilterSliceState, SortItems, SortPropertyEnum } from '../filter/types';
-import { RootState } from '../store';
+
 
 const initialState: FilterSliceState = {
 	searchValue: '',

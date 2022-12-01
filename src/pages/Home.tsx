@@ -16,7 +16,6 @@ import { fetchPizzas } from '../redux/pizza/asyncActions';
 
 const Home: React.FC = () => {
 	const dispatch = useAppDispatch();
-	const isSearch = React.useRef(false);
 
 	const { items, status } = useSelector(selectPizzaData);
 	const { categoryId, sort, pageCount, searchValue } =
@@ -32,7 +31,7 @@ const Home: React.FC = () => {
 
 	const getPizzas = async () => {
 		const category = categoryId > 0 ? String(categoryId) : '';
-		const search = searchValue ? `&search=${searchValue}` : '';
+		const search = searchValue;
 		const sortBy = sort.sortProperty.replace('-', '');
 
 		dispatch(
