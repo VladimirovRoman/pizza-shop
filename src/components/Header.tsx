@@ -1,15 +1,28 @@
-import { Link, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import LogoSvg2 from '../assets/img/logo.svg'
-import Search from './Search'
-import { cartSelect } from '../redux/slices/cartSlice'
+import LogoSvg2 from '../assets/img/logo.svg';
+import Search from './Search';
+import { cartSelect } from '../redux/slices/cartSlice';
 
 const Header: React.FC = () => {
-	const { totalPrice, items } = useSelector(cartSelect)
-	const location = useLocation()
+	const { totalPrice, items } = useSelector(cartSelect);
+	const location = useLocation();
+	const isMounted = React.useRef(false);
 
-	const totalCount = items.reduce((acc: number, obj: any) => acc + obj.count, 0)
+	const totalCount = items.reduce(
+		(acc: number, obj: any) => acc + obj.count,
+		0
+	);
+
+	React.useEffect(() => {
+		if (isMounted.current) {
+			const json = JSON.stringify(items);
+			localStorage.setItem('cart', json);
+		}
+		isMounted.current = true
+	}, [items]);
 
 	return (
 		<div className='header'>
@@ -25,7 +38,7 @@ const Header: React.FC = () => {
 						</div>
 					</div>
 				</Link>
-				<Search />
+				{location.pathname !== '/cart' && <Search />}
 				<div className='header__cart'>
 					{location.pathname !== '/cart' && (
 						<Link to='/cart' className='button button--cart'>
@@ -66,7 +79,7 @@ const Header: React.FC = () => {
 				</div>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default Header
+export default Header;

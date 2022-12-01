@@ -1,17 +1,22 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
-import { addItem, removeItem, minusItem, CartItem } from '../redux/slices/cartSlice'
+import {
+	addItem,
+	removeItem,
+	minusItem,
+	CartItem,
+} from '../redux/slices/cartSlice';
 
 type CartItemProps = {
-	imageUrl: string
-	type: string
-	price: number
-	title: string
-	count: number
-	size: number
-	id: string
-}
+	imageUrl: string;
+	type: string;
+	price: number;
+	title: string;
+	count: number;
+	size: number;
+	id: string;
+};
 
 const CartItemBlock: React.FC<CartItemProps> = ({
 	imageUrl,
@@ -22,25 +27,24 @@ const CartItemBlock: React.FC<CartItemProps> = ({
 	size,
 	id,
 }) => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	const onClickPlus = () => {
 		dispatch(
 			addItem({
 				id,
-			} as CartItem 
-			)
-		)
-	}
+			} as CartItem)
+		);
+	};
 	const onClickMinus = () => {
-		dispatch(minusItem(id))
-	}
+		dispatch(minusItem(id));
+	};
 
 	const onClickRemove = () => {
 		if (window.confirm('Вы действительно хотите удалить товар ?')) {
-			dispatch(removeItem(id))
+			dispatch(removeItem(id));
 		}
-	}
+	};
 
 	return (
 		<div className='cart__item'>
@@ -54,7 +58,8 @@ const CartItemBlock: React.FC<CartItemProps> = ({
 				</p>
 			</div>
 			<div className='cart__item-count'>
-				<div
+				<button
+					disabled={count === 1}
 					onClick={onClickMinus}
 					className='button button--outline button--circle cart__item-count-minus'
 				>
@@ -74,9 +79,10 @@ const CartItemBlock: React.FC<CartItemProps> = ({
 							fill='#EB5A1E'
 						/>
 					</svg>
-				</div>
+				</button>
+
 				<b>{count}</b>
-				<div
+				<button
 					onClick={onClickPlus}
 					className='button button--outline button--circle cart__item-count-plus'
 				>
@@ -96,7 +102,7 @@ const CartItemBlock: React.FC<CartItemProps> = ({
 							fill='#EB5A1E'
 						/>
 					</svg>
-				</div>
+				</button>
 			</div>
 			<div className='cart__item-price'>
 				<b>{price * count} ₽</b>
@@ -125,7 +131,7 @@ const CartItemBlock: React.FC<CartItemProps> = ({
 				</div>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
 export default CartItemBlock;

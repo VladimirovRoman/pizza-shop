@@ -237,6 +237,10 @@ body {
 			b {
 				font-size: 22px;
 			}
+			:disabled {
+				opacity: 0;
+				cursor: default;
+			}
 		}
 
 		&-price {
