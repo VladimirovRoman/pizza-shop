@@ -15,10 +15,8 @@ import { setCategoryId, setPageCount } from '../redux/filter/slice';
 import { fetchPizzas } from '../redux/pizza/asyncActions';
 
 const Home: React.FC = () => {
-
 	const dispatch = useAppDispatch();
 	const isSearch = React.useRef(false);
-	
 
 	const { items, status } = useSelector(selectPizzaData);
 	const { categoryId, sort, pageCount, searchValue } =
@@ -27,7 +25,6 @@ const Home: React.FC = () => {
 	const onClickCategory = React.useCallback((index: number) => {
 		dispatch(setCategoryId(index));
 	}, []);
-
 
 	const onChangePage = (page: number) => {
 		dispatch(setPageCount(page));
@@ -48,46 +45,8 @@ const Home: React.FC = () => {
 		);
 		window.scrollTo(0, 0);
 	};
-	// Если изменили параметры и был первый рендер то в этом случае  ->
-	// React.useEffect(() => {
-	// 	if (isMounted.current) {
-	// 		const queryString = qs.stringify({
-	// 			sortProperty: sort.sortProperty,
-	// 			categoryId,
-	// 			pageCount,
-	// 		});
-	// 		navigate(`?${queryString}`);
-	// 	}
-	// 	isMounted.current = true;
-	// }, [categoryId, sort.sortProperty, pageCount]);
-
-	// Если был первый рендер, то проверяем URL - параметры и сохраняем в редаксе ->
-	// React.useEffect(() => {
-	// 	if (window.location.search) {
-	// 		const params = qs.parse(
-	// 			window.location.search.substring(1)
-	// 		) as unknown as SearchPizzaParams;
-	// 		const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
-	// 		dispatch(
-	// 			setFilter({
-	// 				searchValue: params.search,
-	// 				categoryId: Number(params.category),
-	// 				pageCount: Number(params.pageCount),
-	// 				sort: sort || sortList[0],
-	// 			})
-	// 		);
-	// 	}
-	// 	isMounted.current = true;
-	// }, []);
-
-	// здесь запрашиваем пиццы при первом рендере ->
 	React.useEffect(() => {
-		window.scrollTo(0, 0);
-
-		if (!isSearch.current) {
-			getPizzas();
-		}
-		isSearch.current = false;
+		getPizzas();
 	}, [categoryId, sort.sortProperty, searchValue, pageCount]);
 
 	const skeleton = [...new Array(6)].map((_, i) => <SkeletonCard key={i} />);
@@ -112,7 +71,7 @@ const Home: React.FC = () => {
 			</h2>
 			{status === 'error' ? (
 				<div className='content__error-info'>
-					<h2>К сожалению произошла ошибка</h2>
+					<h2>К сожалению произошла ошибка </h2>
 					<p>Попробуйте зайти позднее</p>
 				</div>
 			) : (

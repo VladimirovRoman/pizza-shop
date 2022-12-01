@@ -15,7 +15,6 @@ const pizzaSlice = createSlice({
 			state.items = action.payload;
 		},
 	},
-
 	extraReducers: (builder) => {
 		builder.addCase(fetchPizzas.pending, (state, action) => {
 			state.status = Status.LOADING;

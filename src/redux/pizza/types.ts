@@ -14,14 +14,14 @@ export enum Status {
 	ERROR = 'error',
 }
 
-export interface PizzaSliceState {
-	items: Pizza[];
-	status: Status;
-}
-
 export type SearchPizzaParams = {
 	sortBy: string;
 	category: string;
 	search: string;
 	pageCount: number;
 };
+
+export interface PizzaSliceState {
+	items: Pizza[];
+	status: Status;
+}
