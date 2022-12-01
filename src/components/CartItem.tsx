@@ -1,12 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { addItem, minusItem, removeItem } from '../redux/cart/slice';
+import { CartItem } from '../redux/cart/types';
 
-import {
-	addItem,
-	removeItem,
-	minusItem,
-	CartItem,
-} from '../redux/slices/cartSlice';
 
 type CartItemProps = {
 	imageUrl: string;

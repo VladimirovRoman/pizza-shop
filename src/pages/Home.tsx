@@ -2,16 +2,6 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
-import {
-	setCategoryId,
-	setPageCount,
-	selectFilter,
-} from '../redux/slices/filterSlice';
-
-import {
-	fetchPizzas,
-	selectPizzaData,
-} from '../redux/slices/pizzaSlice';
 import Categories from '../components/Categories';
 import SortPopup from '../components/SortPopup';
 import { SkeletonCard } from '../components/PizzaBlock/SkeletonCard';
@@ -19,6 +9,10 @@ import { SkeletonCard } from '../components/PizzaBlock/SkeletonCard';
 import PizzaBlock from '../components/PizzaBlock/Items';
 import Pagination from '../components/Pagination';
 import { useAppDispatch } from '../redux/store';
+import { selectFilter } from '../redux/filter/selectors';
+import { selectPizzaData } from '../redux/pizza/selectors';
+import { setCategoryId, setPageCount } from '../redux/filter/slice';
+import { fetchPizzas } from '../redux/pizza/asyncActions';
 
 const Home: React.FC = () => {
 
