@@ -3,7 +3,6 @@
 .categories {
 	ul {
 		display: flex;
-
 		li {
 			background-color: #f9f9f9;
 			padding: 13px 30px;
@@ -11,11 +10,13 @@
 			margin-right: 10px;
 			font-weight: bold;
 			cursor: pointer;
-			transition: background-color 0.1s ease-in-out;
+			transition: background-color 2s all;
 			@include noselect();
 
 			&:hover {
-				background-color: darken(#f9f9f9, 10%);
+				transition: 1s all;
+				box-shadow:inset 200px 100px 100px 100px $orange;
+				color: white;
 			}
 
 			&:active {
