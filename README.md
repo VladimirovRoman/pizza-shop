@@ -27,5 +27,3 @@
 - Code Splitting
 
   [React Pizza](https://pizza-shop-delta-eight.vercel.app/) (Посмотреть можно тут)
-
-  > > > > > > > 2dbb5de (changes read me)
