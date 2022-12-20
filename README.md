@@ -22,5 +22,5 @@ React Content Loader (скелетон)
 React Pagination (пагинация)
 Code Splitting
 
-Посмотреть можно тут
+Посмотреть можно тут: 
 https://pizza-shop-delta-eight.vercel.app/
