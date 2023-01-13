@@ -1,6 +1,6 @@
 # 🍕 React Pizza 🍕
 
-## ✅[React Pizza](https://pizza-shop-delta-eight.vercel.app/) (Посмотреть можно тут)✅
+### ✅[React Pizza](https://pizza-shop-delta-eight.vercel.app/) (Посмотреть можно тут)✅
 
 ## Что было реализованно:
 
