@@ -1,13 +1,8 @@
-<a href="https://pizza-shop-delta-eight.vercel.app/" target="_blank">
-  <img src="https://github.com/VladimirovRoman/pizza-shop/blob/main/src/assets/img/github2.png" width="600"/>
-</a>
-<a href="https://pizza-shop-delta-eight.vercel.app/" target="_blank">
-  <img src="https://github.com/VladimirovRoman/pizza-shop/blob/main/src/assets/img/github1.png" width="600" />
-</a>
-
 # 🍕 React Pizza 🍕
 
-## Что было реализованно::
+# ✅[React Pizza](https://pizza-shop-delta-eight.vercel.app/) (Посмотреть можно тут)✅
+
+## Что было реализованно:
 
 - Разрабатывал полноценное фронтенд-приложение на ReactJS.
 - Создал компоненты, страницы, сортировку, поиск, пагинацию, фильтрацию и т.д.
@@ -19,7 +14,7 @@
 - Сode splitting (разделение кода на отдельные JS-файлы)
 - Сделал адаптивную вёрстку
 
-# Использованные технологии::
+# Использованные технологии:
 
 - **ReactJS**
 - **TypeScript**
@@ -33,4 +28,10 @@
 - React Pagination (пагинация)
 - Code Splitting
 
-  [React Pizza](https://pizza-shop-delta-eight.vercel.app/) (Посмотреть можно тут)
+
+<a href="https://pizza-shop-delta-eight.vercel.app/" target="_blank">
+  <img src="https://github.com/VladimirovRoman/pizza-shop/blob/main/src/assets/img/github2.png" width="600"/>
+</a>
+<a href="https://pizza-shop-delta-eight.vercel.app/" target="_blank">
+  <img src="https://github.com/VladimirovRoman/pizza-shop/blob/main/src/assets/img/github1.png" width="600" />
+</a>
