@@ -20,10 +20,12 @@ const pizzaSlice = createSlice({
 			state.status = Status.LOADING;
 			state.items = [];
 		});
+
 		builder.addCase(fetchPizzas.fulfilled, (state, action) => {
 			state.items = action.payload;
 			state.status = Status.SUCCESS;
 		});
+		
 		builder.addCase(fetchPizzas.rejected, (state, action) => {
 			state.status = Status.ERROR;
 			state.items = [];
